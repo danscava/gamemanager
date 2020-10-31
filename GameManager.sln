@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameManager.Api", "src\GameManager.Api\GameManager.Api.csproj", "{7951DDE4-C572-4AF7-9D8A-C5BB13124530}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{414D94C3-AAFA-4BF1-B959-D2E6DED8CC7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AAC5EB9D-A85E-4D08-8A67-2DAD4A420D05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C684C919-33D0-47F7-B19D-7004242689C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{E3CBEAFD-8411-4CB9-8AA0-4FD06E069082}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameManager.Data", "src\GameManager.Data\GameManager.Data.csproj", "{295F1A87-2AA4-4536-9074-941A3EE6BDF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameManager.Services", "src\GameManager.Services\GameManager.Services.csproj", "{FE50E8D9-D393-42D8-B59B-7DEAE1692CAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7951DDE4-C572-4AF7-9D8A-C5BB13124530}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7951DDE4-C572-4AF7-9D8A-C5BB13124530}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7951DDE4-C572-4AF7-9D8A-C5BB13124530}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7951DDE4-C572-4AF7-9D8A-C5BB13124530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{295F1A87-2AA4-4536-9074-941A3EE6BDF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{295F1A87-2AA4-4536-9074-941A3EE6BDF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{295F1A87-2AA4-4536-9074-941A3EE6BDF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{295F1A87-2AA4-4536-9074-941A3EE6BDF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE50E8D9-D393-42D8-B59B-7DEAE1692CAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE50E8D9-D393-42D8-B59B-7DEAE1692CAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE50E8D9-D393-42D8-B59B-7DEAE1692CAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE50E8D9-D393-42D8-B59B-7DEAE1692CAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7951DDE4-C572-4AF7-9D8A-C5BB13124530} = {414D94C3-AAFA-4BF1-B959-D2E6DED8CC7C}
+		{295F1A87-2AA4-4536-9074-941A3EE6BDF4} = {414D94C3-AAFA-4BF1-B959-D2E6DED8CC7C}
+		{FE50E8D9-D393-42D8-B59B-7DEAE1692CAA} = {414D94C3-AAFA-4BF1-B959-D2E6DED8CC7C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D23A9E95-4581-4C99-9291-48D4E819803E}
+	EndGlobalSection
+EndGlobal
