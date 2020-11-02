@@ -1,8 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameManager.Data.Models
 {
+    /// <summary>
+    /// Model for the table user
+    /// </summary>
     [Table("user")]
     public class User : Audit
     {
@@ -17,12 +21,14 @@ namespace GameManager.Data.Models
         public string Login { get; set; }
 
         [Column("password")]
-        public byte[] Password { get; set; }
+        public string Password { get; set; }
 
         [Column("salt")]
-        public byte[] Salt { get; set; }
+        public string Salt { get; set; }
 
         [Column("active")]
-        public int Active { get; set; }
+        public override int Active { get; set; }
+
+        public ICollection<UserHasRole> Roles { get; set; }
     }
 }

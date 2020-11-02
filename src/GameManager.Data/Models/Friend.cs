@@ -1,8 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameManager.Data.Models
 {
+    /// <summary>
+    /// Model for the table friend
+    /// </summary>
     [Table("friend")]
     public class Friend : Audit
     {
@@ -20,6 +25,8 @@ namespace GameManager.Data.Models
         public string Telephone { get; set; }
 
         [Column("active")]
-        public int Active { get; set; }
+        public override int Active { get; set; }
+
+        public ICollection<GameMedia> BorrowedGames { get; set; }
     }
 }

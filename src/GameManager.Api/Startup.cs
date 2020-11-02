@@ -1,16 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using GameManager.Api.Extensions;
+using GameManager.Data;
+using GameManager.Data.Interfaces;
+using GameManager.Data.Repositories;
+using GameManager.Services;
+using GameManager.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GameManager.Api
 {
@@ -23,19 +34,41 @@ namespace GameManager.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
 
-            services.AddHttpsRedirection(options =>
+            // Load api settings
+            var apiSettingsConfig = Configuration.GetSection("ApiSettings");
+            services.Configure<ApiSettings>(apiSettingsConfig);
+
+            // Configure Authentication
+            var apiSettings = apiSettingsConfig.Get<ApiSettings>();
+            var key = Encoding.ASCII.GetBytes(apiSettings.Secret);
+
+            services.AddGameManagerAuthentication(key);
+
+            // Add database context
+            services.AddDbContext<GameManagerContext>(options =>
             {
-                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-                options.HttpsPort = 5001;
+                var connectionString = Configuration.GetConnectionString("Default");
+                options.UseMySQL(connectionString);
             });
+
+            // Inject data related classes
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(GenericAsyncRepository<>));
+            services.AddScoped<IAsyncUserRepository, UserRepository>();
+            services.AddScoped<IAsyncGameMediaRepository, GameMediaRepository>();
+            services.AddScoped<IAsyncFriendRepository, FriendRepository>();
+
+            // Inject services
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IGameMediaService, GameMediaService>();
+            services.AddScoped<IFriendService, FriendService>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -45,8 +78,16 @@ namespace GameManager.Api
 
             app.UseHttpsRedirection();
 
+            app.UseExceptionHandler("/error");
+
             app.UseRouting();
 
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

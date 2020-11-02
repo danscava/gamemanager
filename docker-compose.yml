@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  database:
+    build: ./db/
+    ports:
+      - "3306:3306"
+    environment:
+        MYSQL_ROOT_PASSWORD: "&mp@7.)9<hJ3<4z"
+        MYSQL_DATABASE: gamemanager
+        MYSQL_USER: api
+        MYSQL_PASSWORD: "K>k={&}f3bp,LR."
+  api:
+    build: ./src/
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://+:5001
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=4\<JhH@[C>@K_T4
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/certificate/https.pfx
+    volumes:
+      - ./certificate/:/certificate:ro

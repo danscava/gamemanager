@@ -6,6 +6,9 @@ using GameManager.Data.Enums;
 
 namespace GameManager.Data.Models
 {
+    /// <summary>
+    /// Model for the table game_media
+    /// </summary>
     [Table("game_media")]
     public class GameMedia : Audit
     {
@@ -32,6 +35,6 @@ namespace GameManager.Data.Models
         public MediaType MediaType { get; set; }
 
         [Column("active")]
-        public int Active { get; set; }
+        public override int Active { get; set; }
     }
 }

@@ -18,10 +18,8 @@ namespace GameManager.Api
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-                .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
-                .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day,
-                    restrictedToMinimumLevel: LogEventLevel.Information)
-                .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Information)
+                .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .CreateLogger();
@@ -49,14 +47,6 @@ namespace GameManager.Api
                 {
                     webBuilder.ConfigureKestrel(serverOptions =>
                     {
-                        serverOptions.Listen(IPAddress.Loopback, 5000);
-                        serverOptions.Listen(IPAddress.Loopback, 5001,
-                            listenOptions =>
-                            {
-                                listenOptions.UseHttps("https.pfx", "4\\<JhH@[C>@K_T4");
-                                listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1;
-                            });
-
                     }).UseStartup<Startup>();
                 });
         }

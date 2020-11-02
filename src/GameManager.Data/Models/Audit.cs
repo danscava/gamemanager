@@ -3,9 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameManager.Data.Models
 {
+    /// <summary>
+    /// Represents the base information for database models
+    /// </summary>
     public abstract class Audit
     {
         public virtual int Id { get; set; }
+
+        public virtual int Active { get; set; }
 
         #region Audit fields
 
