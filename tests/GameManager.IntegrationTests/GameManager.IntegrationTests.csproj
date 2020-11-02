@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\GameManager.Api\GameManager.Api.csproj" />
-    <ProjectReference Include="..\src\GameManager.Data\GameManager.Data.csproj" />
-    <ProjectReference Include="..\src\GameManager.Services\GameManager.Services.csproj" />
+    <ProjectReference Include="..\..\src\GameManager.Api\GameManager.Api.csproj" />
+    <ProjectReference Include="..\..\src\GameManager.Data\GameManager.Data.csproj" />
+    <ProjectReference Include="..\..\src\GameManager.Services\GameManager.Services.csproj" />
   </ItemGroup>
 
 </Project>
