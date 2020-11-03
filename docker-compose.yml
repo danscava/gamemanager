@@ -9,6 +9,8 @@ services:
         MYSQL_DATABASE: gamemanager
         MYSQL_USER: api
         MYSQL_PASSWORD: "K>k={&}f3bp,LR."
+    networks:
+      - main
   api:
     build:
       context: ./src/
@@ -23,6 +25,8 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/certificate/https.pfx
     volumes:
       - ./certificate/:/certificate:ro
+    networks:
+      - main
   web:
     build: 
       context: ./src/
@@ -36,3 +40,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/certificate/https.pfx
     volumes:
       - ./certificate/:/certificate:ro
+    networks:
+      - main
+networks:
+  main:

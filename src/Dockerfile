@@ -9,7 +9,6 @@ COPY ["GameManager.Api/GameManager.Api.csproj", "GameManager.Api/"]
 COPY ["GameManager.Data/GameManager.Data.csproj", "GameManager.Data/"]
 COPY ["GameManager.Services/GameManager.Services.csproj", "GameManager.Services/"]
 
-RUN ls
 RUN dotnet restore "GameManager.Api/GameManager.Api.csproj"
 COPY . .
 WORKDIR "/src/GameManager.Api"
