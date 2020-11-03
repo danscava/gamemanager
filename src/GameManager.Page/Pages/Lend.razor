@@ -8,7 +8,9 @@
 @inject NavigationManager NavigationManager
 
 @attribute [Authorize]
-<h1>Lend game</h1>
+<div class="col-md-6 offset-md-3 mt-5">
+    <h1>Lend game</h1>
+</div>
 <br />
 @if (_game == null)
 {
@@ -17,32 +19,33 @@
 else
 {
     <div class="col-md-6 offset-md-3 mt-5">
+        <h5>Game info</h5>
         <table class="table">
             <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Year</th>
-                    <th>Platform</th>
-                    <th>Media Type</th>
-                </tr>
+            <tr>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Platform</th>
+                <th>Media Type</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>@_game.title</td>
-                    <td>@_game.year</td>
-                    <td>@(((Platform)_game.platform).GetDescription())</td>
-                    <td>@(((MediaType)_game.media).GetDescription())</td>
-                </tr>
+            <tr>
+                <td>@_game.title</td>
+                <td>@_game.year</td>
+                <td>@(((Platform) _game.platform).GetDescription())</td>
+                <td>@(((MediaType) _game.media).GetDescription())</td>
+            </tr>
             </tbody>
         </table>
 
         <div class="card">
             <h6 class="card-header">Choose friend</h6>
             <div class="card-body">
-                <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
-                    <DataAnnotationsValidator />
+                <EditForm Model="@_model" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator/>
                     <div class="form-group">
-                        <select class="form-control selectpicker" @bind="model.FriendId">
+                        <select class="form-control selectpicker" @bind="_model.FriendId">
                             <option>--select--</option>
                             @foreach (var item in _friends)
                             {
@@ -51,15 +54,15 @@ else
                         </select>
                     </div>
                     <button class="btn btn-primary">
-                        @if (loading)
+                        @if (_loading)
                         {
                             <span class="spinner-border spinner-border-sm mr-1"></span>
                         }
                         Lend Game
                     </button>
-                    @if (!string.IsNullOrEmpty(error))
+                    @if (!string.IsNullOrEmpty(_error))
                     {
-                        <div class="alert alert-danger mt-3 mb-0">@error</div>
+                        <div class="alert alert-danger mt-3 mb-0">@_error</div>
                     }
                 </EditForm>
             </div>
@@ -75,11 +78,11 @@ else
 
     private List<FriendResponseDto> _friends = new List<FriendResponseDto>();
 
-    private String error = "";
+    private String _error = "";
 
-    private bool loading = false;
+    private bool _loading = false;
 
-    private FriendFormModel model = new FriendFormModel();
+    private FriendFormModel _model = new FriendFormModel();
 
     protected override async Task OnInitializedAsync()
     {
@@ -90,16 +93,16 @@ else
 
     private async void HandleValidSubmit()
     {
-        loading = true;
+        _loading = true;
         try
         {
-            await GameMediaService.LendGame(int.Parse(Id), model.FriendId);
+            await GameMediaService.LendGame(int.Parse(Id), _model.FriendId);
             NavigationManager.NavigateTo("/games", true);
         }
         catch (Exception ex)
         {
-            error = ex.Message;
-            loading = false;
+            _error = ex.Message;
+            _loading = false;
             StateHasChanged();
         }
     }

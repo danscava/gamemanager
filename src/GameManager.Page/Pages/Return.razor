@@ -61,15 +61,15 @@ else
             <h6 class="card-header">Return game?</h6>
             <div class="card-body">
                 <button class="btn btn-primary" @onclick="(HandleValidSubmit)">
-                    @if (loading)
+                    @if (_loading)
                     {
                         <span class="spinner-border spinner-border-sm mr-1"></span>
                     }
                     Confirm
                 </button>
-                @if (!string.IsNullOrEmpty(error))
+                @if (!string.IsNullOrEmpty(_error))
                 {
-                    <div class="alert alert-danger mt-3 mb-0">@error</div>
+                    <div class="alert alert-danger mt-3 mb-0">@_error</div>
                 }
             </div>
         </div>
@@ -82,9 +82,9 @@ else
 
     private GameMediaResponseDto _game = null;
 
-    private String error = "";
+    private String _error = "";
 
-    private bool loading = false;
+    private bool _loading = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -93,7 +93,7 @@ else
 
     private async void HandleValidSubmit()
     {
-        loading = true;
+        _loading = true;
         try
         {
             await GameMediaService.ReturnGame(int.Parse(Id));
@@ -101,8 +101,8 @@ else
         }
         catch (Exception ex)
         {
-            error = ex.Message;
-            loading = false;
+            _error = ex.Message;
+            _loading = false;
             StateHasChanged();
         }
     }
