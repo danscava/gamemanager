@@ -12,7 +12,7 @@ docker-compose up
 They will be available on the following ports:
 >MySQL: 3306
 
->API: 5000, 5001
+>API: 5001
 
 >Web: 5002
 
@@ -20,7 +20,7 @@ They will be available on the following ports:
 
 
 ### API
-API runs http and https, on ports 5000 and 5001, respectively.
+API runs https on port 5001.
 
 Swagger doc is located at https://localhost:5001/swagger/index.html 
 \
@@ -35,7 +35,7 @@ Use the following credentials:
 ### Web
 You can access the web ui at: https://localhost:5002/
 \
-The web ui runs on port 5002. Unfortunately, the web interface is still incomplete, you cannot add/edit/remove friends, you can only do this with games, including lending and returningg.
+The web ui runs on port 5002. Unfortunately, the web interface is still incomplete. Currently, you cannot add/edit/remove friends, but you can do this with games, including lending and returning.
 ##
 ### MySQL
 If needed, the database **gamemanager** can be accessed on port 3306, using the following credentials:
