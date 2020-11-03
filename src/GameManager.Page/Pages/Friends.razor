@@ -1,0 +1,48 @@
+﻿@page "/friends"
+@attribute [Authorize]
+
+@using GameManager.Page.Services
+@using GameManager.Data.Models
+@using GameManager.Data.Dtos
+@inject IFriendService FriendService
+
+<h1>Friends</h1>
+
+<p>List of friends</p>
+
+@if (_friends == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Telephone</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var friend in _friends)
+        {
+            <tr>
+                <td>@friend.name</td>
+                <td>@friend.email</td>
+                <td>@friend.telephone</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<FriendResponseDto> _friends;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _friends = await FriendService.GetAllFriends();
+    }
+
+}

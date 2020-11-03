@@ -1,0 +1,111 @@
+﻿@page "/lend/{id}"
+@using GameManager.Data.Dtos
+@using GameManager.Page.Services
+@using System.ComponentModel.DataAnnotations
+@inject IGameMediaService GameMediaService
+@inject IFriendService FriendService
+@inject NavigationManager NavigationManager
+
+@attribute [Authorize]
+<h1>Lend game</h1>
+<br />
+@if (_game == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="col-md-6 offset-md-3 mt-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>Platform</th>
+                    <th>Media Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@_game.title</td>
+                    <td>@_game.year</td>
+                    <td>@_game.platform</td>
+                    <td>@_game.media</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="card">
+            <h6 class="card-header">Choose friend</h6>
+            <div class="card-body">
+                <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <div class="form-group">
+                        <select class="form-control selectpicker" @bind="model.FriendId">
+                            <option>--select--</option>
+                            @foreach (var item in _friends)
+                            {
+                                <option value="@item.id">@item.name</option>
+                            }
+                        </select>
+                    </div>
+                    <button class="btn btn-primary">
+                        @if (loading)
+                        {
+                            <span class="spinner-border spinner-border-sm mr-1"></span>
+                        }
+                        Lend Game
+                    </button>
+                    @if (!string.IsNullOrEmpty(error))
+                    {
+                        <div class="alert alert-danger mt-3 mb-0">@error</div>
+                    }
+                </EditForm>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    [Parameter] public string Id { get; set; }
+
+    private GameMediaResponseDto _game = null;
+
+    private List<FriendResponseDto> _friends = new List<FriendResponseDto>();
+
+    private String error = "";
+
+    private bool loading = false;
+
+    private FriendFormModel model = new FriendFormModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _game = await GameMediaService.GetGameById(int.Parse(Id));
+        _friends = await FriendService.GetAllFriends();
+    }
+
+
+    private async void HandleValidSubmit()
+    {
+        loading = true;
+        try
+        {
+            await GameMediaService.LendGame(int.Parse(Id), model.FriendId);
+            NavigationManager.NavigateTo("/games", true);
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+            loading = false;
+            StateHasChanged();
+        }
+    }
+
+    public class FriendFormModel
+    {
+        [Required]
+        public int FriendId { get; set; }
+    }
+}

@@ -10,13 +10,28 @@ services:
         MYSQL_USER: api
         MYSQL_PASSWORD: "K>k={&}f3bp,LR."
   api:
-    build: ./src/
+    build:
+      context: ./src/
+      dockerfile: Dockerfile 
     ports:
       - "5000:5000"
       - "5001:5001"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=https://+:5001
+      - ASPNETCORE_URLS=https://*:5001
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=4\<JhH@[C>@K_T4
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/certificate/https.pfx
+    volumes:
+      - ./certificate/:/certificate:ro
+  web:
+    build: 
+      context: ./src/
+      dockerfile: Dockerfile-web
+    ports:
+      - "5002:5002"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://*:5002
       - ASPNETCORE_Kestrel__Certificates__Default__Password=4\<JhH@[C>@K_T4
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/certificate/https.pfx
     volumes:

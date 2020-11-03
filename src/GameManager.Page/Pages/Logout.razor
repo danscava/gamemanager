@@ -1,0 +1,13 @@
+﻿@page "/logout"
+@using GameManager.Page.Services
+@inject IAuthenticationService AuthenticationService
+@inject NavigationManager NavigationManager
+
+@code {
+    protected override async void OnInitialized()
+    {
+        await AuthenticationService.Logout();
+        NavigationManager.NavigateTo("/", true);
+
+    }
+}

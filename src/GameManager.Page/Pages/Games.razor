@@ -1,0 +1,62 @@
+﻿@page "/games"
+@attribute [Authorize]
+
+@using GameManager.Page.Services
+@using GameManager.Data.Models
+@using GameManager.Data.Dtos
+@inject IGameMediaService GameMediaService
+
+<h1>Games</h1>
+
+<p>List of owned games</p>
+
+@if (_games == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Platform</th>
+                <th>Media Type</th>
+                <th>Borrowed to</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in _games)
+             {
+            <tr>
+                <td>@game.title</td>
+                <td>@game.year</td>
+                <td>@game.platform</td>
+                <td>@game.media</td>
+                @if (game.borrower != null)
+                {
+                    <td>@game.borrower.name</td>
+                    <td><a href="@($"return/{game.id}")" class="btn btn-success m-1">Return</a></td>
+                }
+                else
+                {
+                    <td>-</td>
+                    <td><a href="@($"lend/{game.id}")" class="btn btn-primary m-1">Lend</a></td>
+                }
+            </tr>
+             }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<GameMediaResponseDto> _games;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _games = await GameMediaService.GetAllGames();
+    }
+
+}

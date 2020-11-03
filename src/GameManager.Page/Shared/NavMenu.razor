@@ -1,4 +1,10 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@using GameManager.Page.Services
+@using Blazored.LocalStorage
+@using GameManager.Page.Models
+@inject IAuthenticationService AuthenticationService
+@inject ILocalStorageService LocalStorageService
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">GameManager.Page</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -12,16 +18,34 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </li>
+        @if (!logged)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="login" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Login
+                </NavLink>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="logout" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Logout
+                </NavLink>
+            </li>
+        }
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link" href="games">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Games
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            <NavLink class="nav-link" href="friends">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Friends
             </NavLink>
         </li>
+
+
     </ul>
 </div>
 
@@ -29,6 +53,13 @@
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private bool logged = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        logged = await LocalStorageService.ContainKeyAsync("user");
+    }
 
     private void ToggleNavMenu()
     {
