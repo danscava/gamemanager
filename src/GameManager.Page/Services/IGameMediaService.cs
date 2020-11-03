@@ -10,6 +10,12 @@ namespace GameManager.Page.Services
 {
     public interface IGameMediaService
     {
+        Task<GameMediaResponseDto> CreateGame(GameMediaCreateDto createDto);
+
+        Task<GameMediaResponseDto> DeleteGame(int id);
+
+        Task<GameMediaResponseDto> UpdateGame(int id, GameMediaCreateDto createDto);
+
         Task<List<GameMediaResponseDto>> GetAllGames();
 
         Task<GameMediaResponseDto> GetGameById(int id);

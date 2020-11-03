@@ -1,0 +1,54 @@
+﻿@page "/games/create"
+@using GameManager.Page.Services
+@using GameManager.Data.Dtos
+@using GameManager.Page.Models
+@attribute [Authorize]
+
+@inject IGameMediaService GameMediaService
+@inject NavigationManager NavigationManager
+
+
+<div class="col-md-6 offset-md-3 mt-5">
+    <div class="card">
+        <h4 class="card-header">Create game</h4>
+        <div class="card-body">
+            <Form ButtonText="Save" 
+                  GameModel="@_model" 
+                  Error ="@_error"
+                  Loading="@_loading"
+                  HandleValidSubmit="@HandleValidSubmit" >
+            </Form>
+        </div>
+    </div>
+</div>
+@code {
+
+    private GameCreateModel _model = new GameCreateModel();
+
+    private bool _loading = false;
+
+    private String _error = "";
+
+    private async void HandleValidSubmit()
+    {
+        _loading = true;
+        try
+        {
+            await GameMediaService.CreateGame(new GameMediaCreateDto()
+            {
+                platform = (int) _model.Platform,
+                media_type = (int) _model.MediaType,
+                title = _model.Title,
+                year = _model.Year
+            });
+            NavigationManager.NavigateTo("/games", true);
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+            _loading = false;
+            StateHasChanged();
+        }
+    }
+
+}

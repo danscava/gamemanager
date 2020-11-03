@@ -1,0 +1,91 @@
+﻿@page "/games/delete/{id}"
+@using GameManager.Data.Dtos
+@using GameManager.Page.Services
+@using GameManager.Data.Enums
+@inject IGameMediaService GameMediaService
+@inject NavigationManager NavigationManager
+
+@attribute [Authorize]
+<div class="col-md-6 offset-md-3 mt-5">
+    <h1>Delete game</h1>
+</div>
+<br />
+@if (_game == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+    <div class="col-md-6 offset-md-3 mt-5">
+        <h5>Game info</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>Platform</th>
+                    <th>Media Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@_game.title</td>
+                    <td>@_game.year</td>
+                    <td>@(((Platform)_game.platform).GetDescription())</td>
+                    <td>@(((MediaType)_game.media).GetDescription())</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class="card">
+            <h6 class="card-header">You really want to delete?</h6>
+            <div class="card-body">
+                <button class="btn btn-primary" @onclick="(HandleValidSubmit)">
+                    @if (_loading)
+                    {
+                        <span class="spinner-border spinner-border-sm mr-1"></span>
+                    }
+                    Confirm
+                </button>
+                @if (!string.IsNullOrEmpty(_error))
+                {
+                    <div class="alert alert-danger mt-3 mb-0">@_error</div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    [Parameter] public string Id { get; set; }
+
+    private GameMediaResponseDto _game = null;
+
+    private String _error = "";
+
+    private bool _loading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _game = await GameMediaService.GetGameById(int.Parse(Id));
+    }
+
+    private async void HandleValidSubmit()
+    {
+        _loading = true;
+        try
+        {
+            await GameMediaService.DeleteGame(int.Parse(Id));
+            NavigationManager.NavigateTo("/games", true);
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+            _loading = false;
+            StateHasChanged();
+        }
+    }
+
+}

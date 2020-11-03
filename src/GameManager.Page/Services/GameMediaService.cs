@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameManager.Data.Dtos;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace GameManager.Page.Services
 {
@@ -11,6 +12,21 @@ namespace GameManager.Page.Services
         public GameMediaService(IApiClient httpService)
         {
             _httpService = httpService;
+        }
+
+        public async Task<GameMediaResponseDto> CreateGame(GameMediaCreateDto createDto)
+        {
+            return await _httpService.Post<GameMediaResponseDto>("api/gamemedia", createDto);
+        }
+
+        public async Task<GameMediaResponseDto> UpdateGame(int id, GameMediaCreateDto createDto)
+        {
+            return await _httpService.Put<GameMediaResponseDto>($"api/gamemedia/{id}", createDto);
+        }
+
+        public async Task<GameMediaResponseDto> DeleteGame(int id)
+        {
+            return await _httpService.Delete<GameMediaResponseDto>($"api/gamemedia/{id}");
         }
 
         public async Task<List<GameMediaResponseDto>> GetAllGames()

@@ -35,7 +35,7 @@ Use the following credentials:
 ### Web
 You can access the web ui at: https://localhost:5002/
 \
-The web ui runs on port 5002. Unfortunately, it's currently incomplete, you cannot add/edit/remove friends or games, you can only lend and return games.
+The web ui runs on port 5002. Unfortunately, the web interface is still incomplete, you cannot add/edit/remove friends, you can only do this with games, including lending and returningg.
 ##
 ### MySQL
 If needed, the database **gamemanager** can be accessed on port 3306, using the following credentials:

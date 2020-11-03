@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameManager.Services", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameManager.UnitTests", "tests\GameManager.UnitTests\GameManager.UnitTests.csproj", "{5364DEC5-2BC6-41EE-9D16-0BEC6C834866}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameManager.Page", "src\GameManager.Page\GameManager.Page.csproj", "{6B718FF9-286A-473C-868E-4E049CCD37F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameManager.Page", "src\GameManager.Page\GameManager.Page.csproj", "{6B718FF9-286A-473C-868E-4E049CCD37F3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameManager.IntegrationTests", "tests\GameManager.IntegrationTests\GameManager.IntegrationTests.csproj", "{AD953947-AADE-4DBE-8AC8-B76637A1E568}"
 EndProject

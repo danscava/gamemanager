@@ -47,6 +47,18 @@ namespace GameManager.Page.Services
             return await Request<T>(request);
         }
 
+        public async Task<T> Put<T>(string uri, object value)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Put, uri);
+            request.Content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, "application/json");
+            return await Request<T>(request);
+        }
+
+        public async Task<T> Delete<T>(string uri)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            return await Request<T>(request);
+        }
 
         private async Task<T> Request<T>(HttpRequestMessage request)
         {
