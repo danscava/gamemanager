@@ -36,7 +36,7 @@ namespace GameManager.Api.Controllers
         {
             var context = HttpContext.Features.Get<IExceptionHandlerFeature>();
             var exception = context?.Error;
-            Response.StatusCode = (int) StatusCodes.Status500InternalServerError;
+            Response.StatusCode = (int) StatusCodes.Status400BadRequest;
 
             if (exception != null)
             {
