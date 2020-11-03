@@ -6,12 +6,14 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["GameManager.Page/GameManager.Page.csproj", "GameManager.Page/"]
 COPY ["GameManager.Data/GameManager.Data.csproj", "GameManager.Data/"]
+
 RUN dotnet restore "GameManager.Page/GameManager.Page.csproj"
 COPY . .
 WORKDIR "/src/GameManager.Page"
 RUN dotnet build "GameManager.Page.csproj" -c Release -o /app/build
 
 FROM build AS publish
+RUN dotnet dev-certs https -ep /app/publish/https.pfx -p "4\<JhH@[C>@K_T4"
 RUN dotnet publish "GameManager.Page.csproj" -c Release -o /app/publish
 
 FROM base AS final

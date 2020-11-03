@@ -22,9 +22,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=https://*:5001
       - ASPNETCORE_Kestrel__Certificates__Default__Password=4\<JhH@[C>@K_T4
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/certificate/https.pfx
-    volumes:
-      - ./certificate/:/certificate:ro
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/https.pfx
     networks:
       - main
   web:
@@ -37,9 +35,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=https://*:5002
       - ASPNETCORE_Kestrel__Certificates__Default__Password=4\<JhH@[C>@K_T4
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/certificate/https.pfx
-    volumes:
-      - ./certificate/:/certificate:ro
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/https.pfx
     networks:
       - main
 networks:

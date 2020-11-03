@@ -15,6 +15,7 @@ WORKDIR "/src/GameManager.Api"
 RUN dotnet build "GameManager.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
+RUN dotnet dev-certs https -ep /app/publish/https.pfx -p "4\<JhH@[C>@K_T4"
 RUN dotnet publish "GameManager.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final

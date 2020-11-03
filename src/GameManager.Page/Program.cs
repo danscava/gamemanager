@@ -22,7 +22,9 @@ namespace GameManager.Page
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.ConfigureKestrel(serverOptions =>
+                    {
+                    }).UseStartup<Startup>();
                 });
     }
 }
