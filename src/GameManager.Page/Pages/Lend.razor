@@ -2,6 +2,7 @@
 @using GameManager.Data.Dtos
 @using GameManager.Page.Services
 @using System.ComponentModel.DataAnnotations
+@using GameManager.Data.Enums
 @inject IGameMediaService GameMediaService
 @inject IFriendService FriendService
 @inject NavigationManager NavigationManager
@@ -29,8 +30,8 @@ else
                 <tr>
                     <td>@_game.title</td>
                     <td>@_game.year</td>
-                    <td>@_game.platform</td>
-                    <td>@_game.media</td>
+                    <td>@(((Platform)_game.platform).GetDescription())</td>
+                    <td>@(((MediaType)_game.media).GetDescription())</td>
                 </tr>
             </tbody>
         </table>

@@ -4,6 +4,9 @@
 @using GameManager.Page.Services
 @using GameManager.Data.Models
 @using GameManager.Data.Dtos
+@using System.ComponentModel
+@using GameManager.Data.Enums
+@using GameManager.Page.Helpers
 @inject IGameMediaService GameMediaService
 
 <h1>Games</h1>
@@ -33,8 +36,8 @@ else
             <tr>
                 <td>@game.title</td>
                 <td>@game.year</td>
-                <td>@game.platform</td>
-                <td>@game.media</td>
+                <td>@(((Platform)game.platform).GetDescription())</td>
+                <td>@(((MediaType)game.media).GetDescription())</td>
                 @if (game.borrower != null)
                 {
                     <td>@game.borrower.name</td>

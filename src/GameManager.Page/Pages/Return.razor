@@ -2,11 +2,14 @@
 @using GameManager.Data.Dtos
 @using GameManager.Page.Services
 @using System.ComponentModel.DataAnnotations
+@using GameManager.Data.Enums
 @inject IGameMediaService GameMediaService
 @inject NavigationManager NavigationManager
 
 @attribute [Authorize]
-<h1>Lend game</h1>
+<div class="col-md-6 offset-md-3 mt-5">
+    <h1>Return game</h1>
+</div>
 <br />
 @if (_game == null)
 {
@@ -14,7 +17,9 @@
 }
 else
 {
+    
     <div class="col-md-6 offset-md-3 mt-5">
+        <h5>Game info</h5>
         <table class="table">
             <thead>
             <tr>
@@ -28,12 +33,13 @@ else
             <tr>
                 <td>@_game.title</td>
                 <td>@_game.year</td>
-                <td>@_game.platform</td>
-                <td>@_game.media</td>
+                <td>@(((Platform)_game.platform).GetDescription())</td>
+                <td>@(((MediaType)_game.media).GetDescription())</td>
             </tr>
             </tbody>
         </table>
         <br/>
+        <h5>Friend info</h5>
         <table class="table">
             <thead>
             <tr>
@@ -54,7 +60,7 @@ else
         <div class="card">
             <h6 class="card-header">Return game?</h6>
             <div class="card-body">
-                <button class="btn btn-primary"  @onclick="(HandleValidSubmit)">
+                <button class="btn btn-primary" @onclick="(HandleValidSubmit)">
                     @if (loading)
                     {
                         <span class="spinner-border spinner-border-sm mr-1"></span>
