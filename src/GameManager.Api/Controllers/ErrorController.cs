@@ -38,6 +38,8 @@ namespace GameManager.Api.Controllers
             var exception = context?.Error;
             Response.StatusCode = (int) StatusCodes.Status400BadRequest;
 
+            // On a improved solution, we should have codes for different types of exceptions and errors
+
             if (exception != null)
             {
                 _logger.LogError($"Returning error: {exception.Message}");

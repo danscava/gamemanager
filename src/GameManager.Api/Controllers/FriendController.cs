@@ -19,7 +19,6 @@ namespace GameManager.Api.Controllers
     /// <summary>
     /// Controller responsible for friend management
     /// </summary>
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FriendController : ControllerBase
@@ -44,8 +43,11 @@ namespace GameManager.Api.Controllers
         /// Get a list of all friends
         /// </summary>
         /// <returns>List of friends</returns>
-        [ProducesResponseType(typeof(FriendResponseDto), 200)]
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(FriendResponseDto[]), 200)]
         [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
+        [ProducesResponseType(401)]
         [Authorize(Roles = Role.Admin)]
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -61,10 +63,13 @@ namespace GameManager.Api.Controllers
         /// <summary>
         /// Get a specific friend by its Id
         /// </summary>
-        /// <param name="id">Friend Id</param>
+        /// <param name="id">Friend's Id</param>
         /// <returns>Friend information</returns>
+        [Produces("application/json")]
+        [Consumes("application/json")]
         [ProducesResponseType(typeof(FriendResponseDto), 200)]
         [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
+        [ProducesResponseType(401)]
         [Authorize(Roles = Role.Admin)]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -83,9 +88,12 @@ namespace GameManager.Api.Controllers
         /// Adds a new friend
         /// </summary>
         /// <param name="createDto">Json containing the friend information</param>
-        /// <returns>Created friend info</returns>
+        /// <returns>Created friend information</returns>
+        [Produces("application/json")]
+        [Consumes("application/json")]
         [ProducesResponseType(typeof(FriendResponseDto), 201)]
         [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
+        [ProducesResponseType(401)]
         [Authorize(Roles = Role.Admin)]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] FriendCreateDto createDto)
@@ -111,11 +119,14 @@ namespace GameManager.Api.Controllers
         /// <summary>
         /// Updates a friend information
         /// </summary>
-        /// <param name="id">Friend Id</param>
-        /// <param name="updateDto">Json with new information</param>
+        /// <param name="id">Friend's Id</param>
+        /// <param name="updateDto">Friend with updated information</param>
         /// <returns>Updated info</returns>
+        [Produces("application/json")]
+        [Consumes("application/json")]
         [ProducesResponseType(typeof(FriendResponseDto), 200)]
         [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
+        [ProducesResponseType(401)]
         [Authorize(Roles = Role.Admin)]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] FriendCreateDto updateDto)
@@ -141,12 +152,15 @@ namespace GameManager.Api.Controllers
         }
 
         /// <summary>
-        /// Removes a friend
+        /// Deletes a friend
         /// </summary>
-        /// <param name="id">Friend Id</param>
+        /// <param name="id">Friend's Id</param>
         /// <returns></returns>
+        [Produces("application/json")]
+        [Consumes("application/json")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
+        [ProducesResponseType(401)]
         [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

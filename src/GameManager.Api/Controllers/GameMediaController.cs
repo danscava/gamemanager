@@ -42,9 +42,14 @@ namespace GameManager.Api.Controllers
         }
 
         /// <summary>
-        /// Retrieves all the games in the database
+        /// Get a list of all games
         /// </summary>
         /// <returns>List of games</returns>
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(GameMediaResponseDto[]), 200)]
+        [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
+        [ProducesResponseType(401)]
         [Authorize(Roles = Role.Admin)]
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -57,10 +62,15 @@ namespace GameManager.Api.Controllers
         }
 
         /// <summary>
-        /// Gets a game information
+        /// Get a specific game by its Id
         /// </summary>
-        /// <param name="id">Id of the game</param>
+        /// <param name="id">Game's Id</param>
         /// <returns>Game information</returns>
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(GameMediaResponseDto), 200)]
+        [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
+        [ProducesResponseType(401)]
         [Authorize(Roles = Role.Admin)]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -80,6 +90,11 @@ namespace GameManager.Api.Controllers
         /// </summary>
         /// <param name="createDto">Json containing the game information</param>
         /// <returns>Created game information</returns>
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(GameMediaResponseDto), 201)]
+        [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
+        [ProducesResponseType(401)]
         [Authorize(Roles = Role.Admin)]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] GameMediaCreateDto createDto)
@@ -114,11 +129,16 @@ namespace GameManager.Api.Controllers
         }
 
         /// <summary>
-        /// Updates a game in the database
+        /// Updates a game information
         /// </summary>
-        /// <param name="id">Id of the game</param>
-        /// <param name="updateDto">Json with game information</param>
+        /// <param name="id">Game's Id</param>
+        /// <param name="updateDto">Game with updated information</param>
         /// <returns>Updated game information</returns>
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(GameMediaResponseDto), 200)]
+        [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
+        [ProducesResponseType(401)]
         [Authorize(Roles = Role.Admin)]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] GameMediaCreateDto updateDto)
@@ -155,10 +175,15 @@ namespace GameManager.Api.Controllers
         }
 
         /// <summary>
-        /// Deletes a game from the manager
+        /// Deletes a game
         /// </summary>
-        /// <param name="id">Id of the game</param>
+        /// <param name="id">Game's Id</param>
         /// <returns></returns>
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
+        [ProducesResponseType(401)]
         [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -178,9 +203,14 @@ namespace GameManager.Api.Controllers
         /// <summary>
         /// Lends a game to a friend
         /// </summary>
-        /// <param name="id">Id of the game</param>
+        /// <param name="id">Game's Id</param>
         /// <param name="lendDto">Friend information</param>
-        /// <returns>Game and borrower information</returns>
+        /// <returns>Game with the borrower information</returns>
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(GameMediaResponseDto), 200)]
+        [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
+        [ProducesResponseType(401)]
         [Authorize(Roles = Role.Admin)]
         [HttpPost("{id}/lend")]
         public async Task<IActionResult> Post(int id, [FromBody] GameMediaLendDto lendDto)
@@ -205,8 +235,13 @@ namespace GameManager.Api.Controllers
         /// <summary>
         /// Returns a borrowed game
         /// </summary>
-        /// <param name="id">Id of the game</param>
+        /// <param name="id">Game's Id</param>
         /// <returns>Game information</returns>
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(GameMediaResponseDto), 200)]
+        [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
+        [ProducesResponseType(401)]
         [Authorize(Roles = Role.Admin)]
         [HttpPost("{id}/return")]
         public async Task<IActionResult> Post(int id)

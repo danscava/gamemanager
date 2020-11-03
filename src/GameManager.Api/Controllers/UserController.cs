@@ -39,12 +39,16 @@ namespace GameManager.Api.Controllers
             _userService = userService;
         }
 
-        
+
         /// <summary>
         /// Authenticates a user
         /// </summary>
         /// <param name="request">Json with username and password</param>
         /// <returns>User info and token</returns>
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(AuthenticateResponseDto), 200)]
+        [ProducesResponseType(typeof(ApiErrorResponseDto), 400)]
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] AuthenticateRequestDto request)
