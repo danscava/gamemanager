@@ -4,12 +4,6 @@
 A simple manager for controlling and lending your games
 
 #### How to run
-First, on the solution folder, create a self signed certificate, this will be used by Kestrel on the containers:
-```powershell
-dotnet dev-certs https -ep certificate/https.pfx -p "4\<JhH@[C>@K_T4"
-dotnet dev-certs https --trust
-```
-\
 The solution has 3  containers: database, api and web. \
 Use docker compose to build and run them.
 
